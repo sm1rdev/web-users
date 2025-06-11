@@ -1,13 +1,12 @@
 package ru.smrdela.backend.api.users;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.constraints.NotNull;
+import org.springframework.web.bind.annotation.*;
 import ru.smrdela.backend.models.User;
 import ru.smrdela.backend.service.UserService;
 
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173/")
 @RestController
@@ -22,5 +21,25 @@ public class UsersController {
     @GetMapping
     public List<User> getUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/{id}")
+    public User getUser(@PathVariable int id) {
+        return userService.getUser(id);
+    }
+
+    @PostMapping
+    public void createUser(@NotNull @RequestBody User user) {
+        userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    public void updateUser(@PathVariable int id, @NotNull @RequestBody User user) {
+        userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable int id) {
+        userService.deleteUser(id);
     }
 }
